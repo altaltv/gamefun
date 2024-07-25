@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .login-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Enter Details</h2>
+        <input type="text" id="username" placeholder="Name">
+        <input type="password" id="password" placeholder="Password">
+        <button id="login-button">Login</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        let attempts = 0;
+        const loginButton = document.getElementById('login-button');
+        const messageDiv = document.getElementById('message');
+
+        loginButton.addEventListener('click', () => {
+            attempts++;
+
+            if (attempts <= 3) {
+                moveButtonRandomly();
+                if (attempts === 3) {
+                    messageDiv.textContent = 'lol press it again';
+                }
+            }
+
+            if (attempts > 3) {
+                const password = document.getElementById('password').value;
+                if (password === 'veerthebest') {
+                    window.location.href = 'home.html';
+                } else {
+                    messageDiv.textContent = 'Incorrect password. Try again!';
+                }
+            }
+        });
+
+        function moveButtonRandomly() {
+            const container = document.querySelector('.login-container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = loginButton.getBoundingClientRect();
+
+            const maxX = containerRect.width - buttonRect.width;
+            const maxY = containerRect.height - buttonRect.height;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            loginButton.style.position = 'absolute';
+            loginButton.style.left = `${randomX}px`;
+            loginButton.style.top = `${randomY}px`;
+        }
+    </script>
+</body>
+</html>
